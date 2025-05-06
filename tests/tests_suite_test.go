@@ -4,6 +4,10 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"reflect"
+	"testing"
+	"time"
+
 	"github.com/onsi/ginkgo/v2"
 	ginkgo_reporters "github.com/onsi/ginkgo/v2/reporters"
 	"k8s.io/apimachinery/pkg/api/errors"
@@ -16,9 +20,6 @@ import (
 	"kubevirt.io/application-aware-quota/tests/flags"
 	"kubevirt.io/application-aware-quota/tests/libaaq"
 	qe_reporters "kubevirt.io/qe-tools/pkg/ginkgo-reporters"
-	"reflect"
-	"testing"
-	"time"
 
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
@@ -172,6 +173,7 @@ func BuildTestSuite() {
 
 func getRunningAAQ(aaqClient *clientset.Clientset) (*aaqv1.AAQ, error) {
 	aaqList, err := aaqClient.AaqV1alpha1().AAQs().List(context.Background(), metav1.ListOptions{})
+	fmt.Println("******aaqList****", aaqList)
 	if err != nil {
 		return nil, fmt.Errorf("cannot list AAQ objects")
 	}
